@@ -59,7 +59,7 @@ async def handler(event):
         return
     try:
         
-        await event.respond('Cancelled and restarted.')
+        await event.respond('Cancelled & restarted.')
         client.disconnect()
         os.execl(sys.executable, sys.executable, *sys.argv)
     except:
