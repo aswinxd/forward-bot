@@ -49,3 +49,6 @@ def start_forwardbot(shortname):
         spec.loader.exec_module(mod)
         sys.modules["forwardbot.plugins" + shortname] = mod
         print("IMPORTED " + shortname)
+
+
+#deleted
