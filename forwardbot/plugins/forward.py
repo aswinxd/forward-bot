@@ -22,16 +22,16 @@ async def handler(event):
         await event.respond("You are not authorized to use this Bot. Create your own.")
         return
     async with bot.conversation(event.chat_id) as conv:
-        await conv.send_message("**» ᴘʟᴇᴀsᴇ sᴇɴᴅ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ɪᴅ ғʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ғᴏʀᴡᴀʀᴅ ᴍᴇssᴀɢᴇs ᴀs ᴀ ʀᴇᴘʟʏ ᴛᴏ ᴛʜɪs ᴍᴇssᴀɢᴇ.**")
+        await conv.send_message("**source chat id**")
         while True:
             r = conv.wait_event(events.NewMessage(chats=event.chat_id))
             r = await r
             global fromchannel
             fromchannel = r.message.message.strip()
             if not r.is_reply:
-                await conv.send_message("**» ᴘʟᴇᴀsᴇ sᴇɴᴅ ᴛʜᴇ ᴍᴇssᴀɢᴇ ᴀs ᴀ ʀᴇᴘʟʏ ᴛᴏ ᴛʜᴇ ᴍᴇssᴀɢᴇ.**")
+                await conv.send_message("**send the message as reply to the message**")
             else:
-                await conv.send_message("**» ᴏᴋᴀʏ ɴᴏᴡ sᴇɴᴅ ᴍᴇ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ɪᴅ ᴛᴏ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ғᴏʀᴡᴀʀᴅ ᴍᴇssᴀɢᴇs ᴀs ᴀ ʀᴇᴘʟʏ ᴛᴏ ᴛʜɪs ᴍᴇssᴀɢᴇ.**")
+                await conv.send_message("**target chat id**")
                 break
         while True:
             p = conv.wait_event(events.NewMessage(chats=event.chat_id))
@@ -39,9 +39,9 @@ async def handler(event):
             global tochannel
             tochannel = p.message.message.strip()
             if not p.is_reply:
-                await conv.send_message("**» ᴘʟᴇᴀsᴇ sᴇɴᴅ ᴛʜᴇ ᴍᴇssᴀɢᴇ ᴀs ᴀ ʀᴇᴘʟʏ ᴛᴏ ᴛʜᴇ ᴍᴇssᴀɢᴇ.**")
+                await conv.send_message("**send the message as reply to the message**")
             else:
-                await conv.send_message("**» ᴏᴋᴀʏ ɴᴏᴡ sᴇɴᴅ ᴍᴇ ᴛʜᴇ ᴍᴇssᴀɢᴇ ɪᴅ ғʀᴏᴍ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ sᴛᴀʀᴛ ғᴏʀᴡᴀʀᴅɪɴɢ ᴀs ᴀ ʀᴇᴘʟʏ ᴛᴏ ᴛʜɪs ᴍᴇssᴀɢᴇ.(0, ɪғ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ғᴏʀᴡᴀʀᴅ ғʀᴏᴍ ʙᴇɢɪɴɪɴɢ)**")
+                await conv.send_message("**forward a message from source chat**")
                 break
         while True:
             q = conv.wait_event(events.NewMessage(chats=event.chat_id))
@@ -49,12 +49,12 @@ async def handler(event):
             global offsetid
             offsetid = q.message.message.strip()
             if not q.is_reply:
-                await conv.send_message("**» ᴘʟᴇᴀsᴇ sᴇɴᴅ ᴛʜᴇ ᴍᴇssᴀɢᴇ ᴀs ᴀ ʀᴇᴘʟʏ ᴛᴏ ᴛʜᴇ ᴍᴇssᴀɢᴇ.**")
+                await conv.send_message("**send the message as reply message**")
             else:
                 break
         await event.respond('**Select What you need to forward**', buttons=[
-                    [Button.inline('ᴀʟʟ ᴍᴇssᴀɢᴇs', b'all'), Button.inline('ᴏɴʟʏ ᴘʜᴏᴛᴏs', b'photo')],
-                    [Button.inline('ᴏɴʟʏ ᴅᴏᴄᴜᴍᴇɴᴛs', b'docs'), Button.inline('ᴏɴʟʏ ᴠɪᴅᴇᴏ' , b'video')]
+                    [Button.inline('all message', b'all'), Button.inline('only photo', b'photo')],
+                    [Button.inline('only doc', b'docs'), Button.inline('only videos' , b'video')]
                     ])
 
 @forwardbot_cmd("reset", is_args=False)
@@ -64,7 +64,7 @@ async def handler(event):
         return
     global MessageCount
     MessageCount=0
-    await event.respond("**ᴍᴇssᴀɢᴇ ᴄᴏᴜɴᴛ ʜᴀs ʙᴇᴇɴ ʀᴇsᴇᴛ ᴛᴏ 0**")
+    await event.respond("**message count reset**")
     print("Message count has been reset to 0")
 
 @forwardbot_cmd("uptime", is_args=False)
@@ -81,7 +81,7 @@ async def handler(event):
         hours = int(seconds / 3600)
         minutes = int((seconds % 3600)/60)
         seconds = int(seconds % 60)
-        await event.respond(f"**ᴛʜᴇ ʙᴏᴛ ɪs ғᴏʀᴡᴀʀᴅɪɴɢ ғɪʟᴇs ғᴏʀ** {days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
+        await event.respond(f"**{days} days, {hours} hours, {minutes} minutes and {seconds} seconds")
     else:
         await event.respond("**Please start a forwarding to check the uptime**")
 
@@ -132,7 +132,7 @@ async def handler(event):
             await event.respond("Sleeping the engine for avoiding ban.")
             return
         try:
-            m=await event.respond("**ᴛʀʏɪɴɢ ғᴏʀᴡᴀʀᴅɪɴɢ**")
+            m=await event.respond("**forwarding**")
             fromchat = int(fromchannel)
             tochat = int(tochannel)
             count = 3593
@@ -170,7 +170,7 @@ async def handler(event):
                                     mcount -= 1
                                     count -= 1
                                     MessageCount += 1
-                                    await m.edit(f"**ɴᴏᴡ ғᴏʀᴡᴀʀᴅɪɴɢ** **{type}.**")
+                                    await m.edit(f"**forwarding** **{type}.**")
                                 else:
                                     try:
                                         await client.send_message(tochat, message)
@@ -221,7 +221,7 @@ async def handler(event):
                     await m.edit("**Starting after 1 hour**")
                     
         except ValueError:
-            await m.edit("**ʏᴏᴜ ᴍᴜsᴛ Jᴏɪɴ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ʙᴇғᴏʀᴇ sᴛᴀʀᴛɪɴɢ ғᴏʀᴡᴀʀᴅɪɴɢ. ᴜsᴇ /join**")
+            await m.edit("**join channel bef9r forwarding/join**")
             return
         print("Finished")
         stop = str(datetime.datetime.now())
