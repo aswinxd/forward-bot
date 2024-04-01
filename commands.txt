@@ -5,5 +5,5 @@ forward - Forward the contents from one channel to othor.
 cancel - Cancel the current task.
 uptime - Check the uptime status.
 status - Check the current status.
-count - Total number of messages sent.
+count - Total number of messages sent - send msg
 reset - reset the count to zero.
